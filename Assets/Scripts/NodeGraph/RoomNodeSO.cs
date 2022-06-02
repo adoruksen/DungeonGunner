@@ -16,6 +16,8 @@ public class RoomNodeSO : ScriptableObject
     #region Editor Code
 #if UNITY_EDITOR
     [HideInInspector] public Rect rect;
+    [HideInInspector] public bool isLeftClickDragging = false;
+    [HideInInspector] public bool isSelected = false;
 
     /// <summary>
     /// Initialise node
@@ -57,7 +59,133 @@ public class RoomNodeSO : ScriptableObject
 
         GUILayout.EndArea();
     }
+
+    /// <summary>
+    /// Populate a string array with the room node types to display that can be selected
+    /// </summary>
+    public string[] GetRoomNodeTypesToDisplay()
+    {
+        string[] roomArray = new string[roomNodeTypeList.list.Count];
+        for (int i = 0; i < roomNodeTypeList.list.Count; i++)
+        {
+            if (roomNodeTypeList.list[i].displayInNodeGraphEditor)
+            {
+                roomArray[i] = roomNodeTypeList.list[i].roomNodeTypeName;
+            }
+        }
+        return roomArray;
+    }
+
+    /// <summary>
+    /// process events for the node
+    /// </summary>
+    public void ProcessEvents(Event currentEvent)
+    {
+        switch (currentEvent.type)
+        {
+            case EventType.MouseDown:
+                ProcessMouseDownEvent(currentEvent);
+                break;
+            case EventType.MouseUp:
+                ProcessMouseUpEvent(currentEvent);
+                break;
+            case EventType.MouseDrag:
+                ProcessMouseDragEvent(currentEvent);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void ProcessMouseDownEvent(Event currentEvent)
+    {
+        //left click down
+        if (currentEvent.button==0)
+        {
+            ProcessLeftClickDownEvent();
+        }
+    }
+
+    /// <summary>
+    /// process left click down event
+    /// </summary>
+    private void ProcessLeftClickDownEvent()
+    {
+        //selection.activeObject actually locked in the node object that we are selected from editorWindow
+        //that means when we select an object at editorWindow, object is selected at UnityEditor too..
+        Selection.activeObject = this;
+
+        //toggle node selection
+        if (isSelected==true)
+        {
+            isSelected = false;
+        }
+        else
+        {
+            isSelected = true;
+        }
+        //isSelected = !isSelected; doing the same job
+    }
+
+    /// <summary>
+    /// process mouse up event
+    /// </summary
+    private void ProcessMouseUpEvent(Event currentEvent)
+    {
+        if (currentEvent.button == 0)
+        {
+            ProcessLeftClickUpEvent();
+        }
+    }
+
+    /// <summary>
+    /// Process left click up event
+    /// </summary>
+    private void ProcessLeftClickUpEvent()
+    {
+        if (isLeftClickDragging)
+        {
+            isLeftClickDragging = false;
+        }
+    }
+
+    /// <summary>
+    /// Process mouse drag event
+    /// </summary>
+    /// <param name="currentEvent"></param>
+    private void ProcessMouseDragEvent(Event currentEvent)
+    {
+        if (currentEvent.button==0)
+        {
+            ProcessLeftMouseDragEvent(currentEvent);
+        }
+    }
+
+    /// <summary>
+    /// Process Left mouse drag event
+    /// </summary>
+    private void ProcessLeftMouseDragEvent(Event currentEvent)
+    {
+        isLeftClickDragging = true;
+
+        //currentEvent.delta captures the relative movement of the mouse compared to the last event.
+        //so that is going to be how much our mouse is moving by.
+        DragNode(currentEvent.delta);
+        GUI.changed = true;
+    }
+
+    /// <summary>
+    /// Drag Node
+    /// </summary>
+    public void DragNode(Vector2 delta)
+    {
+        //we move the node position by delta value
+        rect.position += delta;
+
+        //setDirty tells unity that somethings's happened on this assets.So we need to save it
+        EditorUtility.SetDirty(this);
+    }
 #endif
 
-#endregion Editor Code
+    #endregion Editor Code
 }
