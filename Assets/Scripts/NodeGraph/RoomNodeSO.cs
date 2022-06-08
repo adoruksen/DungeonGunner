@@ -14,6 +14,8 @@ public class RoomNodeSO : ScriptableObject
     [HideInInspector] public RoomNodeTypeListSO roomNodeTypeList;
 
     #region Editor Code
+
+    //the following code should only be run in the Unity Editor
 #if UNITY_EDITOR
     [HideInInspector] public Rect rect;
     [HideInInspector] public bool isLeftClickDragging = false;
@@ -104,6 +106,10 @@ public class RoomNodeSO : ScriptableObject
         {
             ProcessLeftClickDownEvent();
         }
+        else if (currentEvent.button ==1)
+        {
+            ProcessRightClickDownEvent(currentEvent);
+        }
     }
 
     /// <summary>
@@ -125,6 +131,14 @@ public class RoomNodeSO : ScriptableObject
             isSelected = true;
         }
         //isSelected = !isSelected; doing the same job
+    }
+
+    /// <summary>
+    /// Process right click down ( draw lines)
+    /// </summary>
+    private void ProcessRightClickDownEvent(Event currentEvent)
+    {
+        roomNodeGraph.SetNodeToDrawConnectionLineFrom(this, currentEvent.mousePosition);
     }
 
     /// <summary>
@@ -185,6 +199,25 @@ public class RoomNodeSO : ScriptableObject
         //setDirty tells unity that somethings's happened on this assets.So we need to save it
         EditorUtility.SetDirty(this);
     }
+
+    /// <summary>
+    /// Add childID to the node (returns true if the node has been added , otherwise false
+    /// </summary>
+    public bool AddChildRoomNodeIDToRoomNode(string childID)
+    {
+        childRoomNodeIDList.Add(childID);
+        return true;
+    }
+
+    /// <summary>
+    /// Add parentID to the node ( returns true if the node has been added , otherwise false
+    /// </summary>
+    public bool AddParentRoomNodeIDToRoomNode(string parentID)
+    {
+        parentRoomNodeIDList.Add(parentID);
+        return true;
+    }
+
 #endif
 
     #endregion Editor Code
