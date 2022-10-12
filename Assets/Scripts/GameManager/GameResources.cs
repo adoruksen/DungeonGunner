@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameResources : MonoBehaviour
 {
-    public static GameResources instance;
+    private static GameResources instance;
 
     public static GameResources Instance
     {
@@ -26,4 +26,13 @@ public class GameResources : MonoBehaviour
     [Tooltip("Populate with the dungeon RoomNodeTypeListSO")]
     #endregion
     public RoomNodeTypeListSO roomNodeTypeList;
+
+    #region Header MATERIALS
+    [Space(10)]
+    [Header("MATERIALS")]
+    #endregion
+    #region Tooltip
+    [Tooltip("Dimmed Material")]
+    #endregion
+    public Material dimmedMaterial;
 }

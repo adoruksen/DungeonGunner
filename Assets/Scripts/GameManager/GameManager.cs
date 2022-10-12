@@ -54,7 +54,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void PlayDungeonLevel(int dungeonLevelIndex)
     {
-
+        //build dungeon for level
+        var dungeonBuiltSuccesfully = DungeonBuilder.Instance.GenerateDungeon(_dungeonLevelList[dungeonLevelIndex]);
+        if (!dungeonBuiltSuccesfully) Debug.LogError("couldn't build dungeon from specified rooms and node graphs");
     }
 
     #region Valitadion
