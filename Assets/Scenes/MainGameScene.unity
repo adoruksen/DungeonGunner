@@ -410,6 +410,58 @@ MonoBehaviour:
   m_CropFrameX: 1
   m_CropFrameY: 1
   m_StretchFill: 1
+--- !u!1 &404464190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 404464192}
+  - component: {fileID: 404464191}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &404464191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404464190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3888f9fe5efc5c34ebce27da408738f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dungeonLevelList:
+  - {fileID: 11400000, guid: fae71bec0ccfbae4b979e8143c9713a9, type: 2}
+  - {fileID: 11400000, guid: f6b03fa1fb1c4d34ba0bae845c55118d, type: 2}
+  - {fileID: 11400000, guid: fcecdd282192a3c4999c01e6cc69e1a5, type: 2}
+  - {fileID: 11400000, guid: f688276cc0bcc3f47ad0950cf7d2ad92, type: 2}
+  - {fileID: 11400000, guid: ebf7ea1989c836a4186051287808236e, type: 2}
+  - {fileID: 11400000, guid: 079d6f3ff3140674989e62c1b6f0170e, type: 2}
+  currentDungeonLevelListIndex: 0
+  gameState: 0
+--- !u!4 &404464192
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404464190}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &445133806
 GameObject:
   m_ObjectHideFlags: 0
